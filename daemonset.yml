@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: picam
+  namespace: picam
+  labels:
+    app: picam
+spec:
+  selector:
+    matchLabels:
+      app: picam
+  template:
+    metadata:
+      labels:
+        app: picam
+    spec:
+      nodeSelector:
+        beansnet.net/cam: "true"
+      containers:
+      - name: picam
+        image: bentastic27/picam:latest
+        resources:
+          limits:
+            memory: 300Mi
+          requests:
+            memory: 200Mi
+        ports:
+        - containerPort: 8000
+          hostPort: 38000
+        securityContext:
+          privileged: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: picam
+  namespace: picam
+spec:
+  selector:
+    app: picam
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
