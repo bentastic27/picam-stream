@@ -10,7 +10,7 @@ from os import environ
 
 cam_rotate = 0
 if "CAM_ROTATE" in environ:
-    camera_rotate = int(environ.get("CAM_ROTATE"))
+    cam_rotate = int(environ.get("CAM_ROTATE"))
 
 cam_framerate = 5
 if "CAM_FRAMERATE" in environ:
