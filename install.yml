@@ -104,6 +104,13 @@ spec:
       containers:
       - name: picam
         image: bentastic27/picam:latest
+        env:
+        - name: CAM_ROTATE
+          value: "0"
+        - name: CAM_FRAMERATE
+          value: "10"
+        - name: CAM_RESOLUTION
+          value: "640x480"
         resources:
           limits:
             memory: 300Mi
