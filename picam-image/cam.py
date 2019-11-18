@@ -6,18 +6,19 @@ import logging
 import socketserver
 from threading import Condition
 from http import server
+from os import environ
 
-PAGE="""\
-<html>
-<head>
-<title>Raspberry Pi - Surveillance Camera</title>
-</head>
-<body>
-<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
-<center><img src="stream.mjpg" width="640" height="480"></center>
-</body>
-</html>
-"""
+cam_rotate = 0
+if "CAM_ROTATE" in environ:
+    camera_rotate = environ.get("CAM_ROTATE")
+
+cam_framerate = 5
+if "CAM_FRAMERATE" in environ:
+    cam_framerate = environ.get("CAM_FRAMERATE")
+
+cam_resolution = "640x480"
+if "CAM_RESOLUTION" in environ:
+    cam_resolution = environ.get("CAM_RESOLUTION")
 
 class StreamingOutput(object):
     def __init__(self):
@@ -38,18 +39,7 @@ class StreamingOutput(object):
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/':
-            self.send_response(301)
-            self.send_header('Location', '/index.html')
-            self.end_headers()
-        elif self.path == '/index.html':
-            content = PAGE.encode('utf-8')
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/html')
-            self.send_header('Content-Length', len(content))
-            self.end_headers()
-            self.wfile.write(content)
-        elif self.path == '/stream.mjpg':
+        if self.path == '/' or self.path == '/stream.mjpg':
             self.protocol_version = 'HTTP/1.1'
             self.send_response(200)
             self.send_header('Age', 0)
@@ -82,8 +72,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 with picamera.PiCamera(resolution='640x480', framerate=5) as camera:
     output = StreamingOutput()
-    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-    #camera.rotation = 90
+    camera.rotation = cam_rotate
     camera.start_recording(output, format='mjpeg')
     try:
         address = ('', 8000)
