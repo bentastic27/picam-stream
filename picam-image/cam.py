@@ -10,11 +10,11 @@ from os import environ
 
 cam_rotate = 0
 if "CAM_ROTATE" in environ:
-    camera_rotate = environ.get("CAM_ROTATE")
+    camera_rotate = int(environ.get("CAM_ROTATE"))
 
 cam_framerate = 5
 if "CAM_FRAMERATE" in environ:
-    cam_framerate = environ.get("CAM_FRAMERATE")
+    cam_framerate = int(environ.get("CAM_FRAMERATE"))
 
 cam_resolution = "640x480"
 if "CAM_RESOLUTION" in environ:
