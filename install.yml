@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: picam
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -40,7 +45,7 @@ spec:
         app: picam-webapp
     spec:
       nodeSelector:
-        beansnet.net/gateway: "true"
+        kubernetes.io/arch: arm
       containers:
       - name: picam-webapp
         image: bentastic27/picam-webapp:latest
@@ -101,6 +106,7 @@ spec:
     spec:
       nodeSelector:
         beansnet.net/cam: "true"
+        kubernetes.io/arch: arm
       containers:
       - name: picam
         image: bentastic27/picam:latest
