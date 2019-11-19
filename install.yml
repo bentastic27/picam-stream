@@ -49,6 +49,9 @@ spec:
       containers:
       - name: picam-webapp
         image: bentastic27/picam-webapp:latest
+        env:
+        - name: INGRESS_HOST
+          value: "192.168.1.2"
         ports:
         - containerPort: 5000
         resources:
