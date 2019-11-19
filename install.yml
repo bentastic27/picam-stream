@@ -109,6 +109,11 @@ spec:
       nodeSelector:
         beansnet.net/cam: "true"
         kubernetes.io/arch: arm
+      tolerations:
+      - key: beansnet.net/cam
+        value: "true"
+        operator: "Equal"
+        effect: NoSchedule
       containers:
       - name: picam
         image: bentastic27/picam:latest
@@ -116,7 +121,7 @@ spec:
         - name: CAM_ROTATE
           value: "0"
         - name: CAM_FRAMERATE
-          value: "10"
+          value: "5"
         - name: CAM_RESOLUTION
           value: "640x480"
         resources:
