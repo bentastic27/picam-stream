@@ -11,6 +11,7 @@ server {
     proxy_pass http://{{pod.status.pod_ip }}:8000/
   }{% endfor %}
 }
+
 """
 
 config.load_incluster_config()
