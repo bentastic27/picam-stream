@@ -51,7 +51,6 @@ spec:
         image: bentastic27/picam-webapp:latest
         ports:
         - containerPort: 5000
-          hostPort: 5000
         resources:
           limits:
             memory: 60Mi
@@ -127,3 +126,58 @@ spec:
           hostPort: 8000
         securityContext:
           privileged: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: picam-proxy
+  namespace: picam
+  labels:
+    app: picam-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: picam-proxy
+  template:
+    metadata:
+      labels:
+        app: picam-proxy
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: arm
+      containers:
+      - name: picam-proxy
+        image: bentastic27/picam-proxy:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: picam-proxy
+  namespace: picam
+spec:
+  selector:
+    app: picam-proxy
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: picam-proxy-ingress
+  namespace: picam
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /picam-proxy
+        backend:
+          serviceName: picam-proxy
+          servicePort: 80
