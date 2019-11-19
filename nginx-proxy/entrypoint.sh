@@ -10,7 +10,7 @@ while true; do
   python3 /config-gen.py
   NEWSUM=$(md5sum /etc/nginx/conf.d/default.conf | cut -f1 -d' ')
 
-  if [ "$OLDSUM" = "$NEWSUM" ]; then
+  if [ "$OLDSUM" != "$NEWSUM" ]; then
     echo "change detected, reloading"
     nginx -s reload
   fi
