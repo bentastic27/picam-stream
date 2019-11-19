@@ -4,6 +4,6 @@
 </head>
 <body style="background-color:#1a1a1a;">
 {% for pod in pod_list %}
-    <img src="http://{{pod.status.host_ip}}:8000/stream.mjpg" width="640" height="480">
+    <img src="http://{{ ingress_host }}/picam-proxy/{{ pod.metadata.name }}/" width="640" height="480">
 {% endfor %}
 </body>
