@@ -8,7 +8,7 @@ server {
   listen 80;
   {% for pod in pod_list %}
   location /{{ pod.metadata.name }} {
-    proxy_pass http://{{pod.status.pod_ip }}:8000/
+    proxy_pass http://{{pod.status.pod_ip }}:8000/;
   }{% endfor %}
 }
 
