@@ -51,7 +51,7 @@ spec:
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
-          value: "192.168.1.2"
+          value: "192.168.1.11"
         ports:
         - containerPort: 5000
         resources:
@@ -109,19 +109,14 @@ spec:
       nodeSelector:
         beansnet.net/cam: "true"
         kubernetes.io/arch: arm
-      tolerations:
-      - key: beansnet.net/cam
-        value: "true"
-        operator: "Equal"
-        effect: NoSchedule
       containers:
       - name: picam
         image: bentastic27/picam:latest
         env:
         - name: CAM_ROTATE
-          value: "0"
+          value: "180"
         - name: CAM_FRAMERATE
-          value: "5"
+          value: "2"
         - name: CAM_RESOLUTION
           value: "640x480"
         resources:
