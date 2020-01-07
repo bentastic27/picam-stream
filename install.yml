@@ -114,7 +114,7 @@ spec:
         image: bentastic27/picam:latest
         env:
         - name: CAM_ROTATE
-          value: "180"
+          value: "0"
         - name: CAM_FRAMERATE
           value: "2"
         - name: CAM_RESOLUTION
@@ -126,7 +126,6 @@ spec:
             memory: 200Mi
         ports:
         - containerPort: 8000
-          hostPort: 8000
         securityContext:
           privileged: true
 ---
@@ -149,6 +148,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
+        beansnet.net/worker: "true"
       containers:
       - name: picam-proxy
         image: bentastic27/picam-proxy:latest
