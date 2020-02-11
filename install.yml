@@ -51,7 +51,7 @@ spec:
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
-          value: "192.168.1.11"
+          value: "192.168.0.12"
         ports:
         - containerPort: 5000
         resources:
@@ -148,7 +148,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
-        beansnet.net/worker: "true"
+        beansnet.net/k3s-worker: "true"
       containers:
       - name: picam-proxy
         image: bentastic27/picam-proxy:latest
