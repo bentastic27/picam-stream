@@ -4,7 +4,7 @@ from jinja2 import Template
 from kubernetes import client, config
 
 template = """
-netcam_url mjpeg://{{ pod.status.pod_ip }}:8000/;
+netcam_url http://{{ pod.status.pod_ip }}:8000/;
 text_left {{ pod.metadata.name }}
 
 """
