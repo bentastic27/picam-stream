@@ -5,7 +5,8 @@ from kubernetes import client, config
 
 template = """
 netcam_url mjpeg://{{ pod.status.pod_ip }}:8000/;
-text_left {{ pod.spec.nodeName }}
+text_left {{ pod.metadata.name }}
+
 """
 
 config.load_incluster_config()
