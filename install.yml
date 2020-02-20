@@ -184,3 +184,78 @@ spec:
         backend:
           serviceName: picam-proxy
           servicePort: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: motion-output
+  namespace: picam
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 600Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: picam-motion
+  namespace: picam
+  labels:
+    app: picam-motion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: picam-motion
+  template:
+    metadata:
+      labels:
+        app: picam-motion
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        beansnet.net/data: "true"
+      containers:
+      - name: picam-motion
+        image: bentastic27/motion:latest
+        volumeMounts:
+        - name: output-dir
+          mountPath: /var/lib/motion
+      volumes:
+        - name: output-dir
+          persistentVolumeClaim:
+            claimName: motion-output
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: picam-motion-rotate
+  namespace: picam
+spec:
+  schedule: "0 */6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/find
+            - /motion
+            - -type
+            - f
+            - -mtime
+            - "+30"
+            - -delete
+            volumeMounts:
+            - name: output-dir
+              mountPath: /motion
+          restartPolicy: Never
+          volumes:
+            - name: output-dir
+              persistentVolumeClaim:
+                claimName: motion-output
