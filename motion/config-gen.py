@@ -6,6 +6,7 @@ from kubernetes import client, config
 template = """
 netcam_url http://{{ pod.status.pod_ip }}:8000/
 text_left {{ pod.metadata.name }}
+movie_filename {{ pod.metadata.name }}-%Y%m%d%H%M%
 
 """
 
