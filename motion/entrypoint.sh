@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python3 /config-gen.py
-motion -c /etc/motion/motion.conf -p /motion.pid &
+motion -b -c /etc/motion/motion.conf -p /motion.pid &
 
 while true; do
     sleep 60
