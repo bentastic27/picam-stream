@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from os import listdir, remove
 from jinja2 import Template
 from kubernetes import client, config
 
@@ -15,6 +16,9 @@ v1 = client.CoreV1Api()
 
 pod_list = v1.list_namespaced_pod("picam", label_selector="app=picam").items
 tm = Template(template)
+
+for config_file in listdir("/etc/motion/conf.d/"):
+  remove("/etc/motion/conf.d/" + config_file)
 
 for pod in pod_list:
   config_file = open("/etc/motion/conf.d/" + pod.metadata.name + ".conf" , "w")

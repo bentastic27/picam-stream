@@ -5,12 +5,12 @@ motion -c /etc/motion/motion.conf &
 
 while true; do
     sleep 60
-    OLDSUM=$(find /etc/motion/conf.d -type f -exec md5sum {} \; | sort -k 2 | md5sum | cut -f1 -d' ')
+    OLDLIST=$(find /etc/motion/conf.d -type f -name "*.conf" | sort)
     python3 /config-gen.py
-    NEWSUM=$(find /etc/motion/conf.d -type f -exec md5sum {} \; | sort -k 2 | md5sum | cut -f1 -d' ')
+    NEWLIST=$(find /etc/motion/conf.d -type f -name "*.conf" | sort)
 
-    if [ "$OLDSUM" != "$NEWSUM" ]; then
+    if [ "$OLDLIST" != "$NEWLIST" ]; then
         echo "change detected, reloading"
-        kill -s SIGHUP $(cat /var/run/motion/motion.pid)
+        kill -s SIGHUP $(cat /var/run/motion.pid)
     fi
 done
