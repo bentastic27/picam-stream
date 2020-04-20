@@ -90,7 +90,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
-        beansnet.net/k3s-worker: "true"
+        beansnet.net/wired: "true"
       containers:
       - name: proxy
         image: bentastic27/picam-proxy:latest
