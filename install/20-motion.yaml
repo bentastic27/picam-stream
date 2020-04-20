@@ -14,25 +14,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: picam-motion
+  name: motion
   namespace: picam
   labels:
-    app: picam-motion
+    app: motion
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: picam-motion
+      app: motion
   template:
     metadata:
       labels:
-        app: picam-motion
+        app: motion
     spec:
       nodeSelector:
         kubernetes.io/arch: amd64
         beansnet.net/data: "true"
       containers:
-      - name: picam-motion
+      - name: motion
         image: bentastic27/motion:latest
         volumeMounts:
         - name: output-dir
@@ -45,7 +45,7 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: picam-motion-rotate
+  name: motion-rotate
   namespace: picam
 spec:
   schedule: "0 */6 * * *"

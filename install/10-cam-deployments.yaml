@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: picam-webapp
+  name: webapp
   namespace: picam
   labels:
-    app: picam-webapp
+    app: webapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: picam-webapp
+      app: webapp
   template:
     metadata:
       labels:
-        app: picam-webapp
+        app: webapp
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
       containers:
-      - name: picam-webapp
+      - name: webapp
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
@@ -74,25 +74,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: picam-proxy
+  name: proxy
   namespace: picam
   labels:
-    app: picam-proxy
+    app: proxy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: picam-proxy
+      app: proxy
   template:
     metadata:
       labels:
-        app: picam-proxy
+        app: proxy
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
         beansnet.net/k3s-worker: "true"
       containers:
-      - name: picam-proxy
+      - name: proxy
         image: bentastic27/picam-proxy:latest
         ports:
         - containerPort: 80
