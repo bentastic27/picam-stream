@@ -29,7 +29,6 @@ spec:
         app: motion
     spec:
       nodeSelector:
-        kubernetes.io/arch: amd64
         beansnet.net/data: "true"
       containers:
       - name: motion
