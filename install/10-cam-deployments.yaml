@@ -17,12 +17,15 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: arm
+        beansnet.net/wired: "true"
       containers:
       - name: webapp
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
-          value: "192.168.0.12"
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
         ports:
         - containerPort: 5000
         resources:
