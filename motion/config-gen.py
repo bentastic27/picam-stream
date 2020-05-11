@@ -8,7 +8,7 @@ template = """
 netcam_url http://{{ pod.status.pod_ip }}:8000/
 text_left {{ pod.metadata.name }}
 movie_filename {{ pod.metadata.name }}-%Y%m%d%H%M
-
+on_movie_end "gzip %f"
 """
 
 config.load_incluster_config()
