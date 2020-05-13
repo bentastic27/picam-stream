@@ -18,7 +18,9 @@ metadata:
   namespace: picam
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
     traefik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
 spec:
   rules:
   - http:
@@ -48,7 +50,9 @@ metadata:
   namespace: picam
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
     traefik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
 spec:
   rules:
   - http:
