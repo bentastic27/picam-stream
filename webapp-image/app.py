@@ -4,7 +4,7 @@ from os import environ
 
 if "INGRESS_HOST" not in environ:
     print("INGRESS_HOST isn't set, set to your desired IP/hostname of ingress node")
-    print("example: https://example.com/")
+    print("example: https://example.com")
     exit()
 else:
     ingress_host = environ.get("INGRESS_HOST")
