@@ -14,13 +14,21 @@ on_movie_end "gzip %f"
 config.load_incluster_config()
 v1 = client.CoreV1Api()
 
-pod_list = v1.list_namespaced_pod("picam", label_selector="app=picam").items
-tm = Template(template)
+try:
+  pod_list = v1.list_namespaced_pod("picam", label_selector="app=picam").items
+except:
+  print("cannot get pod list")
+  exit()
 
-for config_file in listdir("/etc/motion/conf.d/"):
-  remove("/etc/motion/conf.d/" + config_file)
+if len(pod_list) > 0:
+  for config_file in listdir("/etc/motion/conf.d/"):
+    remove("/etc/motion/conf.d/" + config_file)
 
-for pod in pod_list:
-  config_file = open("/etc/motion/conf.d/" + pod.metadata.name + ".conf" , "w")
-  config_file.write(tm.render(pod=pod))
-  config_file.close()
+  tm = Template(template)
+  for pod in pod_list:
+    config_file = open("/etc/motion/conf.d/" + pod.metadata.name + ".conf" , "w")
+    config_file.write(tm.render(pod=pod))
+    config_file.close()
+
+else:
+  print("pod list less than 1, no changes made")
