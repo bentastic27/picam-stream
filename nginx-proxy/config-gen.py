@@ -17,9 +17,19 @@ server {
 config.load_incluster_config()
 v1 = client.CoreV1Api()
 
-pod_list = v1.list_namespaced_pod("picam", label_selector="app=picam").items
+try:
+  pod_list = v1.list_namespaced_pod("picam", label_selector="app=picam").items
+except:
+  print("cannot get pod list")
+  exit()
+
 tm = Template(template)
 
-config_file = open("/etc/nginx/conf.d/default.conf", "w")
-config_file.write(tm.render(pod_list=pod_list))
-config_file.close()
+if len(pod_list) > 0:
+  tm = Template(template)
+  config_file = open("/etc/nginx/conf.d/default.conf", "w")
+  config_file.write(tm.render(pod_list=pod_list))
+  config_file.close()
+
+else:
+  print("pod list less than 1, no changes made")
