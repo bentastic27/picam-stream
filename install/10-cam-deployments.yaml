@@ -23,7 +23,7 @@ spec:
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
-          value: "https://k3s-master.beansnet.net"
+          value: "http://k3s-master.beansnet.net"
         ports:
         - containerPort: 5000
         resources:
