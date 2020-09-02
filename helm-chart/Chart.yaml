@@ -1,0 +1,7 @@
+apiVersion: v2
+description: Chart for bentastic27 picam project
+maintainers:
+- name: bentastic27
+name: picam-stream
+version: 0.1
+appVersion: 0.1
