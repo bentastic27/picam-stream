@@ -16,7 +16,6 @@ spec:
         app: webapp
     spec:
       nodeSelector:
-        kubernetes.io/arch: arm
         beansnet.net/wired: "true"
       containers:
       - name: webapp
@@ -51,7 +50,6 @@ spec:
     spec:
       nodeSelector:
         beansnet.net/cam: "true"
-        kubernetes.io/arch: arm
       containers:
       - name: picam
         image: bentastic27/picam:latest
@@ -90,7 +88,6 @@ spec:
         app: proxy
     spec:
       nodeSelector:
-        kubernetes.io/arch: arm
         beansnet.net/wired: "true"
       containers:
       - name: proxy

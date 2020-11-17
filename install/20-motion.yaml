@@ -9,7 +9,7 @@ spec:
   storageClassName: local-path
   resources:
     requests:
-      storage: 300Gi
+      storage: 50Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
