@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
   labels:
     app: webapp
 spec:
@@ -22,7 +22,7 @@ spec:
         image: bentastic27/picam-webapp:latest
         env:
         - name: INGRESS_HOST
-          value: "http://k3s-master.beansnet.net"
+          value: {{ .Values.ingress.hostName }}
         ports:
         - containerPort: 5000
         resources:
@@ -36,7 +36,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: picam
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
   labels:
     app: picam
 spec:
@@ -74,7 +74,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: proxy
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
   labels:
     app: proxy
 spec:

@@ -2,20 +2,20 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: motion-output
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - {{ .Values.storage.mode }}
+  storageClassName: {{ .Values.storage.class }}
   resources:
     requests:
-      storage: 300Gi
+      storage: {{ .Values.storage.size }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: motion
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
   labels:
     app: motion
 spec:
@@ -45,7 +45,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: motion-rotate
-  namespace: picam
+  namespace: {{ .Release.Namespace }}
 spec:
   schedule: "0 */6 * * *"
   jobTemplate:

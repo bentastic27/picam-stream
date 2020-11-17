@@ -1,0 +1,8 @@
+---
+ingress:
+    hostName: example.com
+
+storage:
+    class: local-path
+    size: 50Gi
+    mode: ReadWriteOnce
