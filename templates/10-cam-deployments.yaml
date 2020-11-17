@@ -19,7 +19,7 @@ spec:
         beansnet.net/wired: "true"
       containers:
       - name: webapp
-        image: bentastic27/picam-webapp:latest
+        image: {{ .Values.webapp.repository }}:{{ .Values.webapp.tag }}
         env:
         - name: INGRESS_HOST
           value: {{ .Values.ingress.hostName }}
@@ -52,14 +52,14 @@ spec:
         beansnet.net/cam: "true"
       containers:
       - name: picam
-        image: bentastic27/picam:latest
+        image: {{ .Values.picam.repository }}:{{ .Values.picam.tag }}
         env:
         - name: CAM_ROTATE
-          value: "0"
+          value: "{{ .Values.picam.rotate }}"
         - name: CAM_FRAMERATE
-          value: "2"
+          value: "{{ .Values.picam.framerate }}"
         - name: CAM_RESOLUTION
-          value: "640x480"
+          value: "{{ .Values.picam.resolution }}"
         resources:
           limits:
             memory: 300Mi
@@ -91,6 +91,6 @@ spec:
         beansnet.net/wired: "true"
       containers:
       - name: proxy
-        image: bentastic27/picam-proxy:latest
+        image: {{ .Values.proxy.repository }}:{{ .Values.proxy.tag }}
         ports:
         - containerPort: 80

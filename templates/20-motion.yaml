@@ -32,7 +32,7 @@ spec:
         beansnet.net/data: "true"
       containers:
       - name: motion
-        image: bentastic27/motion:latest
+        image: {{ .Values.motion.repository }}:{{ .Values.motion.tag }}
         volumeMounts:
         - name: output-dir
           mountPath: /var/lib/motion
@@ -54,14 +54,14 @@ spec:
         spec:
           containers:
           - name: hello
-            image: busybox
+            image: {{ .Values.motionRotate.repository }}:{{ .Values.motionRotate.tag }}
             args:
             - /bin/find
             - /motion
             - -type
             - f
             - -mtime
-            - "+30"
+            - "+{{ .Values.motionRotate.retention }}"
             - -delete
             volumeMounts:
             - name: output-dir

@@ -1,8 +1,32 @@
 ---
 ingress:
-    hostName: example.com
+  hostName: example.com
 
 storage:
-    class: local-path
-    size: 50Gi
-    mode: ReadWriteOnce
+  class: local-path
+  size: 50Gi
+  mode: ReadWriteOnce
+
+webapp:
+  repository: bentastic27/picam-webapp
+  tag: latest
+
+picam:
+  repository: bentastic27/picam
+  tag: latest
+  rotate: 0
+  framerate: 2
+  resolution: 640x480
+
+proxy:
+  repository: bentastic27/picam-proxy
+  tag: latest
+
+motion:
+  repository: bentastic27/motion
+  tag: latest
+
+motionRotate:
+  repository: busybox
+  tag: latest
+  retention: 30
